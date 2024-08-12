@@ -15,3 +15,6 @@ def findCircleNum(isConnected):
                 visit[i] = True
                 dfs(i)
         return count
+
+
+    
