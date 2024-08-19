@@ -72,7 +72,7 @@
 
 ## 11. How would you implement a linear regression model from scratch in Python?
 **Answer:**  
-```python
+python
 import numpy as np
 
 class LinearRegression:
@@ -248,7 +248,7 @@ This code calculates and prints the importance of each feature in a random fores
 
 ## 20. Write Python code to save and load a trained machine learning model.
 Answer:
-```
+
 python
 Copy code
 import joblib
