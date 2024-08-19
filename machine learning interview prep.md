@@ -66,10 +66,3 @@ Feedforward Neural Networks (FNNs): The most basic type of neural network where 
 Convolutional Neural Networks (CNNs): Specialized for processing structured grid data like images. Used for tasks such as image recognition, object detection, and segmentation.
 Recurrent Neural Networks (RNNs): Designed for sequential data, where the output depends on previous inputs. Used for tasks like time series prediction, language modeling, and machine translation.
 Long Short-Term Memory (LSTM): A type of RNN that can capture long-term dependencies. Used for tasks like speech recognition, text generation, and sentiment analysis.
-These questions and answers should give you a solid foundation for machine learning interviews!
-
-
-
-
-
-
