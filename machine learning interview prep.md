@@ -101,20 +101,20 @@ Answer:
 
 python
 Copy code
-from sklearn.preprocessing import StandardScaler
+```from sklearn.preprocessing import StandardScaler
 
 scaler = StandardScaler()
 scaled_data = scaler.fit_transform(data)
 Feature scaling can be done using StandardScaler from sklearn, which standardizes features by removing the mean and scaling to unit variance.
-
+```
 ## 13. Write Python code to split a dataset into training and test sets.
 Answer:
 
 python
 Copy code
-from sklearn.model_selection import train_test_split
+```from sklearn.model_selection import train_test_split
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)```
 This code splits the dataset into training and test sets, with 20% of the data reserved for testing.
 
 ## 14. How would you implement a decision tree classifier from scratch?
@@ -123,7 +123,7 @@ Implementing a decision tree from scratch is complex, but a basic structure migh
 
 python
 Copy code
-class Node:
+```class Node:
     def __init__(self, feature=None, threshold=None, left=None, right=None, value=None):
         self.feature = feature
         self.threshold = threshold
@@ -150,7 +150,7 @@ def best_split(X, y):
 def split(X_column, split_thresh):
     left_idxs = np.argwhere(X_column <= split_thresh).flatten()
     right_idxs = np.argwhere(X_column > split_thresh).flatten()
-    return left_idxs, right_idxs
+    return left_idxs, right_idxs```
 This code outlines a basic decision tree with recursive splitting. The best_split function would need to be filled out to find the optimal split.
 
 ## 15. How would you handle missing data in a dataset using Python?
@@ -158,10 +158,10 @@ Answer:
 
 python
 Copy code
-from sklearn.impute import SimpleImputer
+```from sklearn.impute import SimpleImputer
 
 imputer = SimpleImputer(strategy='mean')
-X_imputed = imputer.fit_transform(X)
+X_imputed = imputer.fit_transform(X)```
 This code fills missing values with the mean of the column using SimpleImputer from sklearn.
 
 ## 16. Write Python code to implement k-fold cross-validation.
@@ -169,7 +169,7 @@ Answer:
 
 python
 Copy code
-from sklearn.model_selection import KFold
+```from sklearn.model_selection import KFold
 from sklearn.metrics import accuracy_score
 
 kf = KFold(n_splits=5)
@@ -180,7 +180,7 @@ for train_index, test_index in kf.split(X):
     y_train, y_test = y[train_index], y[test_index]
     model.fit(X_train, y_train)
     predictions = model.predict(X_test)
-    print("Accuracy:", accuracy_score(y_test, predictions))
+    print("Accuracy:", accuracy_score(y_test, predictions))```
 This code performs k-fold cross-validation, training and testing the model on different subsets of the data.
 
 ## 17. How would you implement a simple k-nearest neighbors (KNN) algorithm from scratch?
@@ -188,7 +188,7 @@ Answer:
 
 python
 Copy code
-import numpy as np
+```import numpy as np
 from collections import Counter
 
 class KNN:
@@ -208,7 +208,7 @@ class KNN:
         k_indices = np.argsort(distances)[:self.k]
         k_nearest_labels = [self.y_train[i] for i in k_indices]
         most_common = Counter(k_nearest_labels).most_common(1)
-        return most_common[0][0]
+        return most_common[0][0]```
 This code implements a basic k-nearest neighbors algorithm using Euclidean distance.
 
 ## 18. Write Python code to perform hyperparameter tuning using grid search.
@@ -216,7 +216,7 @@ Answer:
 
 python
 Copy code
-from sklearn.model_selection import GridSearchCV
+```from sklearn.model_selection import GridSearchCV
 
 param_grid = {
     'C': [0.1, 1, 10],
@@ -228,7 +228,7 @@ grid = GridSearchCV(SVC(), param_grid, refit=True, verbose=2)
 grid.fit(X_train, y_train)
 
 print("Best Parameters:", grid.best_params_)
-print("Best Estimator:", grid.best_estimator_)
+print("Best Estimator:", grid.best_estimator_)```
 This code performs grid search to find the best hyperparameters for an SVM model.
 
 ## 19. How would you use Python to calculate the feature importance in a random forest model?
@@ -236,14 +236,14 @@ Answer:
 
 python
 Copy code
-from sklearn.ensemble import RandomForestClassifier
+```from sklearn.ensemble import RandomForestClassifier
 
 model = RandomForestClassifier()
 model.fit(X_train, y_train)
 
 importances = model.feature_importances_
 for i, importance in enumerate(importances):
-    print(f"Feature {i}: {importance}")
+    print(f"Feature {i}: {importance}")```
 This code calculates and prints the importance of each feature in a random forest model.
 
 ## 20. Write Python code to save and load a trained machine learning model.
@@ -251,7 +251,7 @@ Answer:
 
 python
 Copy code
-import joblib
+```import joblib
 
 
 joblib.dump(model, 'model.pkl')
