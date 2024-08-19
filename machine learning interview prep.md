@@ -199,3 +199,106 @@ This repository contains a list of machine learning practical coding questions a
   - **Examples**: K-Nearest Neighbors (KNN), Decision Trees, Kernel Density Estimation.
   - **Pros**: More flexible, capable of capturing complex patterns.
   - **Cons**: Can be computationally expensive and may require more data to achieve good performance.
+### 21. What is Feature Engineering and Why is it Important?
+
+**Details:**
+- **Feature Engineering**: The process of using domain knowledge to select, modify, or create features (variables) that make machine learning algorithms work better.
+- **Importance**:
+  - **Improves Model Performance**: Well-engineered features can lead to better model accuracy and generalization by highlighting relevant patterns.
+  - **Reduces Complexity**: Good feature engineering can simplify the model, reducing the need for complex algorithms and enhancing interpretability.
+  - **Encodes Domain Knowledge**: By incorporating domain-specific knowledge, feature engineering helps in capturing relevant patterns and relationships that raw data might not reveal.
+
+### 22. What is Principal Component Analysis (PCA) and How Does It Work?
+
+**Details:**
+- **Principal Component Analysis (PCA)**: A dimensionality reduction technique used to transform a dataset into a set of orthogonal components that capture the most variance.
+- **How It Works**:
+  - **Compute Covariance Matrix**: Calculate the covariance matrix of the features to understand the relationships between them.
+  - **Eigenvalue Decomposition**: Find the eigenvalues and eigenvectors of the covariance matrix. The eigenvectors represent the directions of maximum variance, and the eigenvalues indicate the magnitude of the variance.
+  - **Select Principal Components**: Choose the top \(k\) eigenvectors (principal components) corresponding to the largest eigenvalues. These components capture the most variance in the data.
+  - **Transform Data**: Project the original data onto the new feature space defined by the principal components to reduce dimensionality while preserving variance.
+- **Uses**: PCA is used to reduce dimensionality for improved visualization, to remove noise, and to speed up training by reducing the number of features.
+
+### 23. What is the Difference Between L1 and L2 Regularization?
+
+**Details:**
+- **L1 Regularization (Lasso)**: Adds a penalty equal to the absolute value of the coefficients to the loss function.
+  - **Formula**: \( \text{Penalty} = \lambda \sum_{i} |w_i| \)
+  - **Effect**: Can lead to sparse models where some coefficients are exactly zero, performing feature selection and simplifying the model.
+- **L2 Regularization (Ridge)**: Adds a penalty equal to the square of the coefficients to the loss function.
+  - **Formula**: \( \text{Penalty} = \lambda \sum_{i} w_i^2 \)
+  - **Effect**: Shrinks the coefficients but does not necessarily lead to zero coefficients; helps in preventing overfitting by constraining the magnitude of the coefficients.
+- **Comparison**:
+  - **L1**: Can zero out some coefficients, which is useful for feature selection and producing sparse models.
+  - **L2**: Generally does not zero out coefficients but can reduce their magnitude, improving generalization and model stability.
+
+### 24. What is the Bias-Variance Tradeoff?
+
+**Details:**
+- **Bias**: The error introduced by approximating a real-world problem, which may be complex, by a simplified model. High bias can lead to underfitting, where the model fails to capture important patterns in the data.
+- **Variance**: The error introduced by the model's sensitivity to small fluctuations in the training data. High variance can lead to overfitting, where the model captures noise as if it were a pattern.
+- **Tradeoff**: Balancing bias and variance is crucial for model performance. A model with high bias may be too simple, while a model with high variance may be too complex. The goal is to find the right balance where both bias and variance are minimized, leading to better generalization.
+
+### 25. What is the Role of Cross-Validation in Model Evaluation?
+
+**Details:**
+- **Cross-Validation**: A technique used to assess the performance of a model by dividing the data into multiple subsets (folds) and evaluating the model on each subset.
+- **Common Methods**:
+  - **k-Fold Cross-Validation**: The data is divided into \(k\) folds. The model is trained \(k\) times, each time using \(k-1\) folds for training and the remaining fold for validation. The performance metrics are averaged over all \(k\) iterations.
+  - **Leave-One-Out Cross-Validation (LOOCV)**: A special case of \(k\)-fold cross-validation where \(k\) is equal to the number of data points. Each data point is used once as the validation set, and the remaining points are used for training.
+- **Benefits**: Cross-validation provides a more reliable estimate of model performance by reducing the risk of overfitting and ensuring that the model's performance is evaluated on different subsets of the data.
+
+### 26. What is the Difference Between Supervised and Unsupervised Learning?
+
+**Details:**
+- **Supervised Learning**: Involves training a model on labeled data, where each input data point is associated with a known output label.
+  - **Examples**: 
+    - **Classification**: Assigning labels to data points, such as spam detection or image classification.
+    - **Regression**: Predicting continuous values, such as house prices or stock prices.
+- **Unsupervised Learning**: Involves training a model on unlabeled data, where the model tries to find patterns or structures in the data without predefined labels.
+  - **Examples**:
+    - **Clustering**: Grouping similar data points together, such as customer segmentation.
+    - **Dimensionality Reduction**: Reducing the number of features while retaining important information, such as using PCA.
+
+### 27. What is the Concept of Ensemble Learning?
+
+**Details:**
+- **Ensemble Learning**: A technique that combines multiple models to improve overall performance compared to individual models. The idea is that a group of weak learners can come together to form a strong learner.
+- **Common Techniques**:
+  - **Bagging (Bootstrap Aggregating)**: Combines predictions from multiple models trained on different subsets of the data. Example: Random Forest.
+  - **Boosting**: Sequentially trains models, with each new model focusing on correcting the errors made by the previous ones. Example: AdaBoost, Gradient Boosting.
+  - **Stacking**: Combines multiple models and uses another model (meta-learner) to make the final prediction based on the outputs of the base models. Example: Stacked Generalization.
+- **Benefits**: Ensemble methods can reduce overfitting, increase accuracy, and improve robustness by leveraging the strengths of multiple models.
+
+### 28. What is the Purpose of a Learning Rate in Optimization Algorithms?
+
+**Details:**
+- **Learning Rate**: A hyperparameter that controls the size of the steps taken during optimization in gradient descent algorithms.
+- **Purpose**:
+  - **Controls Convergence Speed**: Affects how quickly or slowly the algorithm converges to the optimal solution. A suitable learning rate helps in achieving convergence efficiently.
+  - **Prevents Overshooting**: A well-chosen learning rate helps avoid overshooting the minimum of the loss function and ensures that the model converges smoothly.
+  - **Tuning**: Requires careful tuning; a learning rate that is too high can cause divergence, while one that is too low can lead to slow convergence and might get stuck in local minima.
+
+### 29. What is the Difference Between Precision and Recall?
+
+**Details:**
+- **Precision**: The proportion of true positive predictions among all positive predictions made by the model. It measures how many of the predicted positive cases are actually positive.
+  - **Formula**: \( \text{Precision} = \frac{TP}{TP + FP} \)
+- **Recall**: The proportion of true positive predictions among all actual positive instances. It measures how many of the actual positive cases were predicted correctly.
+  - **Formula**: \( \text{Recall} = \frac{TP}{TP + FN} \)
+- **Tradeoff**: Precision and recall often have an inverse relationship; increasing one can decrease the other. The choice depends on the specific problem and the cost of false positives vs. false negatives. For example, in medical diagnostics, high recall may be preferred to ensure all positive cases are detected.
+
+### 30. What is Gradient Descent and How Does it Work?
+
+**Details:**
+- **Gradient Descent**: An optimization algorithm used to minimize the loss function by iteratively adjusting the model parameters in the direction that reduces the loss.
+- **How It Works**:
+  - **Calculate Gradient**: Compute the gradient (partial derivatives) of the loss function with respect to each parameter. The gradient indicates the direction of the steepest ascent in the loss landscape.
+  - **Update Parameters**: Adjust the parameters in the direction of the negative gradient to reduce the loss. The step size is controlled by the learning rate.
+  - **Repeat**: Continue this process until convergence or until a stopping criterion is met, such as a maximum number of iterations or a minimum change in loss.
+- **Variants**:
+  - **Batch Gradient Descent**: Uses the entire dataset to compute the gradient in each iteration, which can be computationally expensive for large datasets.
+  - **Stochastic Gradient Descent (SGD)**: Uses a single data point to compute the gradient, which can lead to faster convergence but more noisy updates.
+  - **Mini-Batch Gradient Descent**: Uses a small batch of data points to compute the gradient, balancing the benefits of batch and stochastic methods.
+
+Feel free to use this formatted content for your Markdown file or any other documentation!
