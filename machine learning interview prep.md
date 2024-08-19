@@ -96,18 +96,18 @@ class LinearRegression:
 
     def predict(self, X):
         return np.dot(X, self.weights) + self.bias
-## 12. How would you perform feature scaling using Python?
+12. How would you perform feature scaling using Python?
 Answer:
 
 python
 Copy code
-```from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler
 
 scaler = StandardScaler()
 scaled_data = scaler.fit_transform(data)
 Feature scaling can be done using StandardScaler from sklearn, which standardizes features by removing the mean and scaling to unit variance.
-```
-## 13. Write Python code to split a dataset into training and test sets.
+
+13. Write Python code to split a dataset into training and test sets.
 Answer:
 
 python
@@ -117,7 +117,7 @@ from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 This code splits the dataset into training and test sets, with 20% of the data reserved for testing.
 
-## 14. How would you implement a decision tree classifier from scratch?
+14. How would you implement a decision tree classifier from scratch?
 Answer:
 Implementing a decision tree from scratch is complex, but a basic structure might look like this:
 
@@ -131,131 +131,67 @@ class Node:
         self.right = right
         self.value = value
 
-def build_tree(X, y, depth=0, max_depth=3):
-    n_samples, n_features = X.shape
-    if depth >= max_depth or n_samples <= 1:
-        leaf_value = np.argmax(np.bincount(y))
-        return Node(value=leaf_value)
-
-    feature_idx, threshold = best_split(X, y)
-    left_idxs, right_idxs = split(X[:, feature_idx], threshold)
-    left = build_tree(X[left_idxs, :], y[left_idxs], depth + 1, max_depth)
-    right = build_tree(X[right_idxs, :], y[right_idxs], depth + 1, max_depth)
-    return Node(feature_idx, threshold, left, right)
-
-def best_split(X, y):
-    
-    pass
-
-def split(X_column, split_thresh):
-    left_idxs = np.argwhere(X_column <= split_thresh).flatten()
-    right_idxs = np.argwhere(X_column > split_thresh).flatten()
-    return left_idxs, right_idxs
-This code outlines a basic decision tree with recursive splitting. The best_split function would need to be filled out to find the optimal split.
-
-## 15. How would you handle missing data in a dataset using Python?
-Answer:
-
-python
-Copy code
-from sklearn.impute import SimpleImputer
-
-imputer = SimpleImputer(strategy='mean')
-X_imputed = imputer.fit_transform(X)
-This code fills missing values with the mean of the column using SimpleImputer from sklearn.
-
-## 16. Write Python code to implement k-fold cross-validation.
-Answer:
-
-python
-Copy code
-```from sklearn.model_selection import KFold
-from sklearn.metrics import accuracy_score
-
-kf = KFold(n_splits=5)
-model = SomeMLModel()
-
-for train_index, test_index in kf.split(X):
-    X_train, X_test = X[train_index], X[test_index]
-    y_train, y_test = y[train_index], y[test_index]
-    model.fit(X_train, y_train)
-    predictions = model.predict(X_test)
-    print("Accuracy:", accuracy_score(y_test, predictions))```
-This code performs k-fold cross-validation, training and testing the model on different subsets of the data.
-
-## 17. How would you implement a simple k-nearest neighbors (KNN) algorithm from scratch?
-Answer:
-
-python
-Copy code
-```import numpy as np
-from collections import Counter
-
-class KNN:
-    def __init__(self, k=3):
-        self.k = k
+class DecisionTreeClassifier:
+    def __init__(self, max_depth=100, min_samples_split=2):
+        self.max_depth = max_depth
+        self.min_samples_split = min_samples_split
+        self.root = None
 
     def fit(self, X, y):
-        self.X_train = X
-        self.y_train = y
+        self.root = self._grow_tree(X, y)
+
+    def _grow_tree(self, X, y, depth=0):
+        # Stopping criteria
+        n_samples, n_features = X.shape
+        if depth >= self.max_depth or n_samples < self.min_samples_split:
+            return Node(value=self._most_common_label(y))
+
+        # Find the best split
+        best_feature, best_threshold = self._best_split(X, y, n_samples, n_features)
+        if best_feature is None:
+            return Node(value=self._most_common_label(y))
+
+        # Grow the children recursively
+        left_indices, right_indices = self._split(X[:, best_feature], best_threshold)
+        left = self._grow_tree(X[left_indices, :], y[left_indices], depth + 1)
+        right = self._grow_tree(X[right_indices, :], y[right_indices], depth + 1)
+        return Node(best_feature, best_threshold, left, right)
+
+    def _best_split(self, X, y, n_samples, n_features):
+        # Placeholder for actual split logic
+        return None, None
+
+    def _split(self, X_feature, threshold):
+        # Placeholder for actual split logic
+        return [], []
+
+    def _most_common_label(self, y):
+        # Placeholder for finding the most common label in y
+        return None
 
     def predict(self, X):
-        predictions = [self._predict(x) for x in X]
-        return np.array(predictions)
+        # Placeholder for prediction logic
+        return np.array([self._traverse_tree(x, self.root) for x in X])
 
-    def _predict(self, x):
-        distances = [np.linalg.norm(x - x_train) for x_train in self.X_train]
-        k_indices = np.argsort(distances)[:self.k]
-        k_nearest_labels = [self.y_train[i] for i in k_indices]
-        most_common = Counter(k_nearest_labels).most_common(1)
-        return most_common[0][0]```
-This code implements a basic k-nearest neighbors algorithm using Euclidean distance.
+    def _traverse_tree(self, x, node):
+        # Placeholder for tree traversal logic
+        return None
+This code provides a basic structure for implementing a decision tree classifier.
 
-## 18. Write Python code to perform hyperparameter tuning using grid search.
+15. How would you evaluate a machine learning model in Python?
 Answer:
 
 python
 Copy code
-```from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
-param_grid = {
-    'C': [0.1, 1, 10],
-    'gamma': [1, 0.1, 0.01],
-    'kernel': ['rbf', 'linear']
-}
+# Assuming y_true are the true labels and y_pred are the predicted labels
+accuracy = accuracy_score(y_true, y_pred)
+precision = precision_score(y_true, y_pred)
+recall = recall_score(y_true, y_pred)
+f1 = f1_score(y_true, y_pred)
 
-grid = GridSearchCV(SVC(), param_grid, refit=True, verbose=2)
-grid.fit(X_train, y_train)
-
-print("Best Parameters:", grid.best_params_)
-print("Best Estimator:", grid.best_estimator_)```
-This code performs grid search to find the best hyperparameters for an SVM model.
-
-## 19. How would you use Python to calculate the feature importance in a random forest model?
-Answer:
-
-python
-Copy code
-```from sklearn.ensemble import RandomForestClassifier
-
-model = RandomForestClassifier()
-model.fit(X_train, y_train)
-
-importances = model.feature_importances_
-for i, importance in enumerate(importances):
-    print(f"Feature {i}: {importance}")```
-This code calculates and prints the importance of each feature in a random forest model.
-
-## 20. Write Python code to save and load a trained machine learning model.
-Answer:
-
-python
-Copy code
-```import joblib
-
-
-joblib.dump(model, 'model.pkl')
-
-
-loaded_model = joblib.load('model.pkl')
-```
+print(f'Accuracy: {accuracy}')
+print(f'Precision: {precision}')
+print(f'Recall: {recall}')
+print(f'F1 Score: {f1}')
