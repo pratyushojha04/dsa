@@ -114,7 +114,7 @@ python
 Copy code
 ```from sklearn.model_selection import train_test_split
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)```
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 This code splits the dataset into training and test sets, with 20% of the data reserved for testing.
 
 ## 14. How would you implement a decision tree classifier from scratch?
