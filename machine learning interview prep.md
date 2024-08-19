@@ -123,7 +123,7 @@ Implementing a decision tree from scratch is complex, but a basic structure migh
 
 python
 Copy code
-```class Node:
+class Node:
     def __init__(self, feature=None, threshold=None, left=None, right=None, value=None):
         self.feature = feature
         self.threshold = threshold
@@ -150,7 +150,7 @@ def best_split(X, y):
 def split(X_column, split_thresh):
     left_idxs = np.argwhere(X_column <= split_thresh).flatten()
     right_idxs = np.argwhere(X_column > split_thresh).flatten()
-    return left_idxs, right_idxs```
+    return left_idxs, right_idxs
 This code outlines a basic decision tree with recursive splitting. The best_split function would need to be filled out to find the optimal split.
 
 ## 15. How would you handle missing data in a dataset using Python?
@@ -158,10 +158,10 @@ Answer:
 
 python
 Copy code
-```from sklearn.impute import SimpleImputer
+from sklearn.impute import SimpleImputer
 
 imputer = SimpleImputer(strategy='mean')
-X_imputed = imputer.fit_transform(X)```
+X_imputed = imputer.fit_transform(X)
 This code fills missing values with the mean of the column using SimpleImputer from sklearn.
 
 ## 16. Write Python code to implement k-fold cross-validation.
