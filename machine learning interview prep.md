@@ -302,3 +302,283 @@ This repository contains a list of machine learning practical coding questions a
   - **Mini-Batch Gradient Descent**: Uses a small batch of data points to compute the gradient, balancing the benefits of batch and stochastic methods.
 
 Feel free to use this formatted content for your Markdown file or any other documentation!
+
+### 31. What is Linear Regression and How Does It Work?
+
+**Details:**
+- **Linear Regression**: A statistical method used to model the relationship between a dependent variable and one or more independent variables by fitting a linear equation to observed data.
+- **How It Works**:
+  - **Model Equation**: The relationship is modeled using the equation \( y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n + \epsilon \), where \( \beta_0 \) is the intercept, \( \beta_i \) are the coefficients, and \( \epsilon \) is the error term.
+  - **Objective**: Minimize the sum of squared residuals (the difference between the observed and predicted values) to find the best-fitting line.
+  - **Estimation**: Parameters \( \beta_i \) are estimated using techniques such as Ordinary Least Squares (OLS).
+
+**Python Implementation**:
+```python
+import numpy as np
+from sklearn.linear_model import LinearRegression
+import matplotlib.pyplot as plt
+
+# Sample data
+X = np.array([[1], [2], [3], [4], [5]])
+y = np.array([2, 4, 6, 8, 10])
+
+# Create and fit the model
+model = LinearRegression()
+model.fit(X, y)
+
+# Predictions
+y_pred = model.predict(X)
+
+# Plotting
+plt.scatter(X, y, color='blue', label='Data points')
+plt.plot(X, y_pred, color='red', label='Fitted line')
+plt.xlabel('X')
+plt.ylabel('y')
+plt.legend()
+plt.show()
+### 32. What is the Difference Between Simple Linear Regression and Multiple Linear Regression?
+
+**Details:**
+- **Simple Linear Regression**: Models the relationship between a single independent variable and the dependent variable. The equation is \( y = \beta_0 + \beta_1 x + \epsilon \).
+- **Multiple Linear Regression**: Models the relationship between multiple independent variables and the dependent variable. The equation is \( y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n + \epsilon \).
+
+**Python Implementation** (Multiple Linear Regression):
+```python
+from sklearn.linear_model import LinearRegression
+import numpy as np
+
+# Sample data
+X = np.array([[1, 2], [2, 3], [3, 4], [4, 5], [5, 6]])
+y = np.array([3, 5, 7, 9, 11])
+
+# Create and fit the model
+model = LinearRegression()
+model.fit(X, y)
+
+# Predictions
+y_pred = model.predict(X)
+33. How Do You Evaluate the Performance of a Linear Regression Model?
+Details:
+
+Metrics:
+R-squared (R²): Measures the proportion of variance in the dependent variable that is predictable from the independent variables. Ranges from 0 to 1, where 1 indicates perfect fit.
+Mean Squared Error (MSE): Measures the average of the squares of the errors—that is, the average squared difference between estimated values and the actual value.
+Root Mean Squared Error (RMSE): The square root of MSE, providing an error metric in the same units as the dependent variable.
+Python Implementation:
+
+python
+Copy code
+from sklearn.metrics import r2_score, mean_squared_error
+import numpy as np
+
+# Assuming y and y_pred are defined
+r2 = r2_score(y, y_pred)
+mse = mean_squared_error(y, y_pred)
+rmse = np.sqrt(mse)
+
+print(f"R-squared: {r2}")
+print(f"Mean Squared Error: {mse}")
+print(f"Root Mean Squared Error: {rmse}")
+34. What is Logistic Regression and How Does It Work?
+Details:
+
+Logistic Regression: A statistical method for binary classification that models the probability of a binary outcome based on one or more predictor variables.
+How It Works:
+Model Equation: Uses the logistic function 
+𝜎
+(
+𝑧
+)
+=
+1
+1
++
+𝑒
+−
+𝑧
+σ(z)= 
+1+e 
+−z
+ 
+1
+​
+  to transform the linear combination of the input features into a probability.
+Objective: Estimate the parameters that maximize the likelihood of the observed data.
+Python Implementation:
+
+python
+Copy code
+from sklearn.linear_model import LogisticRegression
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+# Load data
+iris = load_iris()
+X = iris.data[iris.target != 2]  # Use only two classes
+y = iris.target[iris.target != 2]
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Create and fit the model
+model = LogisticRegression()
+model.fit(X_train, y_train)
+
+# Predictions
+y_pred = model.predict(X_test)
+accuracy = accuracy_score(y_test, y_pred)
+
+print(f"Accuracy: {accuracy}")
+35. How Do You Interpret the Coefficients of a Logistic Regression Model?
+Details:
+
+Coefficients: The coefficients in logistic regression represent the change in the log-odds of the outcome for a one-unit change in the predictor variable.
+Interpretation:
+Odds Ratio: The exponentiated coefficient (e^β) represents the odds ratio, which indicates how the odds of the outcome increase or decrease with a one-unit change in the predictor.
+Python Implementation:
+
+python
+Copy code
+import numpy as np
+
+# Coefficients and their interpretation
+coefficients = model.coef_[0]
+odds_ratios = np.exp(coefficients)
+
+print(f"Coefficients: {coefficients}")
+print(f"Odds Ratios: {odds_ratios}")
+36. What is Multicollinearity and How Can It Affect Linear Regression?
+Details:
+
+Multicollinearity: Occurs when independent variables in a regression model are highly correlated, leading to unreliable estimates of the coefficients.
+Effects:
+Inflated Standard Errors: High multicollinearity can increase the standard errors of the coefficients, making them less reliable.
+Variance Inflation Factor (VIF): A common diagnostic measure for multicollinearity. High VIF values indicate high multicollinearity.
+Python Implementation:
+
+python
+Copy code
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+import pandas as pd
+
+# Example data
+X_df = pd.DataFrame(X, columns=['Feature1', 'Feature2'])
+
+# Calculate VIF
+vif = pd.DataFrame()
+vif['Feature'] = X_df.columns
+vif['VIF'] = [variance_inflation_factor(X_df.values, i) for i in range(X_df.shape[1])]
+
+print(vif)
+37. What is Overfitting and How Can You Prevent It in Regression Models?
+Details:
+
+Overfitting: Occurs when a model learns the noise in the training data rather than the underlying pattern, leading to poor generalization to new data.
+Prevention Techniques:
+Regularization: Techniques like L1 and L2 regularization add penalties to the loss function to constrain the model complexity.
+Cross-Validation: Using techniques like k-fold cross-validation to assess model performance on different subsets of the data.
+Simplifying the Model: Reducing the number of features or using simpler models.
+Python Implementation (with Regularization):
+
+python
+Copy code
+from sklearn.linear_model import Ridge
+
+# Create and fit the model with L2 regularization
+model = Ridge(alpha=1.0)
+model.fit(X_train, y_train)
+
+# Predictions and evaluation
+y_pred = model.predict(X_test)
+print(f"R-squared: {r2_score(y_test, y_pred)}")
+38. How Do You Handle Imbalanced Datasets in Logistic Regression?
+Details:
+
+Imbalanced Datasets: Occur when one class is significantly underrepresented compared to the other.
+Handling Techniques:
+Resampling: Methods like oversampling the minority class or undersampling the majority class.
+Class Weights: Adjusting class weights in the logistic regression model to penalize misclassifications of the minority class more heavily.
+Python Implementation:
+
+python
+Copy code
+from sklearn.linear_model import LogisticRegression
+from sklearn.utils.class_weight import compute_class_weight
+import numpy as np
+
+# Compute class weights
+class_weights = compute_class_weight('balanced', classes=np.unique(y), y=y)
+class_weight_dict = dict(enumerate(class_weights))
+
+# Create and fit the model with class weights
+model = LogisticRegression(class_weight=class_weight_dict)
+model.fit(X_train, y_train)
+
+# Predictions
+y_pred = model.predict(X_test)
+39. What Are the Assumptions of Linear Regression and How Can You Check Them?
+Details:
+
+Assumptions:
+Linearity: The relationship between the dependent and independent variables is linear.
+Independence: Observations are independent of each other.
+Homoscedasticity: Constant variance of the residuals.
+Normality: Residuals of the model are normally distributed.
+Checking Assumptions:
+Linearity: Scatter plots of residuals vs. predicted values.
+Independence: Durbin-Watson test.
+Homoscedasticity: Breusch-Pagan test or residual plots.
+Normality: Q-Q plots or Shapiro-Wilk test.
+Python Implementation:
+
+python
+Copy code
+import statsmodels.api as sm
+import matplotlib.pyplot as plt
+
+# Fit the model
+model = sm.OLS(y, sm.add_constant(X)).fit()
+
+# Residuals
+residuals = model.resid
+
+# Plot residuals
+plt.scatter(model.fittedvalues, residuals)
+plt.xlabel('Fitted values')
+plt.ylabel('Residuals')
+plt.title('Residuals vs Fitted')
+plt.show()
+40. How Do You Interpret the ROC Curve and AUC in Logistic Regression?
+Details:
+
+ROC Curve (Receiver Operating Characteristic Curve): A plot of the true positive rate (sensitivity) against the false positive rate (1 - specificity) at various threshold settings.
+AUC (Area Under the Curve): The area under the ROC curve. AUC ranges from 0 to 1, where a value of 1 indicates perfect classification and 0.5 indicates no discrimination.
+Interpretation:
+Higher AUC: Indicates better model performance and ability to distinguish between classes.
+ROC Curve: Helps in selecting the optimal threshold and understanding the trade-off between sensitivity and specificity.
+Python Implementation:
+
+python
+Copy code
+from sklearn.metrics import roc_curve, auc
+import matplotlib.pyplot as plt
+
+# Predict probabilities
+y_prob = model.predict_proba(X_test)[:, 1]
+
+# Compute ROC curve and AUC
+fpr, tpr, _ = roc_curve(y_test, y_prob)
+roc_auc = auc(fpr, tpr)
+
+# Plot ROC curve
+plt.figure()
+plt.plot(fpr, tpr, color='blue', label=f'ROC curve (area = {roc_auc:.2f})')
+plt.plot([0, 1], [0, 1], color='gray', linestyle='--')
+plt.xlim([0.0, 1.0])
+plt.ylim([0.0, 1.05])
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('Receiver Operating Characteristic (ROC)')
+plt.legend(loc="lower right")
+plt.show()
