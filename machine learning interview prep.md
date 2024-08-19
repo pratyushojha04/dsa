@@ -66,3 +66,198 @@ Feedforward Neural Networks (FNNs): The most basic type of neural network where 
 Convolutional Neural Networks (CNNs): Specialized for processing structured grid data like images. Used for tasks such as image recognition, object detection, and segmentation.
 Recurrent Neural Networks (RNNs): Designed for sequential data, where the output depends on previous inputs. Used for tasks like time series prediction, language modeling, and machine translation.
 Long Short-Term Memory (LSTM): A type of RNN that can capture long-term dependencies. Used for tasks like speech recognition, text generation, and sentiment analysis.
+
+
+
+11. How would you implement a linear regression model from scratch in Python?
+Answer:
+
+python
+Copy code
+import numpy as np
+
+class LinearRegression:
+    def __init__(self, learning_rate=0.01, n_iters=1000):
+        self.learning_rate = learning_rate
+        self.n_iters = n_iters
+        self.weights = None
+        self.bias = None
+
+    def fit(self, X, y):
+        n_samples, n_features = X.shape
+        self.weights = np.zeros(n_features)
+        self.bias = 0
+
+        for _ in range(self.n_iters):
+            y_predicted = np.dot(X, self.weights) + self.bias
+            dw = (1 / n_samples) * np.dot(X.T, (y_predicted - y))
+            db = (1 / n_samples) * np.sum(y_predicted - y)
+            self.weights -= self.learning_rate * dw
+            self.bias -= self.learning_rate * db
+
+    def predict(self, X):
+        return np.dot(X, self.weights) + self.bias
+This code implements a basic linear regression model using gradient descent.
+
+12. How would you perform feature scaling using Python?
+Answer:
+
+python
+Copy code
+from sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+scaled_data = scaler.fit_transform(data)
+Feature scaling can be done using StandardScaler from sklearn, which standardizes features by removing the mean and scaling to unit variance.
+
+13. Write Python code to split a dataset into training and test sets.
+Answer:
+
+python
+Copy code
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+This code splits the dataset into training and test sets, with 20% of the data reserved for testing.
+
+14. How would you implement a decision tree classifier from scratch?
+Answer:
+Implementing a decision tree from scratch is complex, but a basic structure might look like this:
+
+python
+Copy code
+class Node:
+    def __init__(self, feature=None, threshold=None, left=None, right=None, value=None):
+        self.feature = feature
+        self.threshold = threshold
+        self.left = left
+        self.right = right
+        self.value = value
+
+def build_tree(X, y, depth=0, max_depth=3):
+    n_samples, n_features = X.shape
+    if depth >= max_depth or n_samples <= 1:
+        leaf_value = np.argmax(np.bincount(y))
+        return Node(value=leaf_value)
+
+    feature_idx, threshold = best_split(X, y)
+    left_idxs, right_idxs = split(X[:, feature_idx], threshold)
+    left = build_tree(X[left_idxs, :], y[left_idxs], depth + 1, max_depth)
+    right = build_tree(X[right_idxs, :], y[right_idxs], depth + 1, max_depth)
+    return Node(feature_idx, threshold, left, right)
+
+def best_split(X, y):
+    # Implement the logic to find the best feature and threshold to split
+    pass
+
+def split(X_column, split_thresh):
+    left_idxs = np.argwhere(X_column <= split_thresh).flatten()
+    right_idxs = np.argwhere(X_column > split_thresh).flatten()
+    return left_idxs, right_idxs
+This code outlines a basic decision tree with recursive splitting. The best_split function would need to be filled out to find the optimal split.
+
+15. How would you handle missing data in a dataset using Python?
+Answer:
+
+python
+Copy code
+from sklearn.impute import SimpleImputer
+
+imputer = SimpleImputer(strategy='mean')
+X_imputed = imputer.fit_transform(X)
+This code fills missing values with the mean of the column using SimpleImputer from sklearn.
+
+16. Write Python code to implement k-fold cross-validation.
+Answer:
+
+python
+Copy code
+from sklearn.model_selection import KFold
+from sklearn.metrics import accuracy_score
+
+kf = KFold(n_splits=5)
+model = SomeMLModel()
+
+for train_index, test_index in kf.split(X):
+    X_train, X_test = X[train_index], X[test_index]
+    y_train, y_test = y[train_index], y[test_index]
+    model.fit(X_train, y_train)
+    predictions = model.predict(X_test)
+    print("Accuracy:", accuracy_score(y_test, predictions))
+This code performs k-fold cross-validation, training and testing the model on different subsets of the data.
+
+17. How would you implement a simple k-nearest neighbors (KNN) algorithm from scratch?
+Answer:
+
+python
+Copy code
+import numpy as np
+from collections import Counter
+
+class KNN:
+    def __init__(self, k=3):
+        self.k = k
+
+    def fit(self, X, y):
+        self.X_train = X
+        self.y_train = y
+
+    def predict(self, X):
+        predictions = [self._predict(x) for x in X]
+        return np.array(predictions)
+
+    def _predict(self, x):
+        distances = [np.linalg.norm(x - x_train) for x_train in self.X_train]
+        k_indices = np.argsort(distances)[:self.k]
+        k_nearest_labels = [self.y_train[i] for i in k_indices]
+        most_common = Counter(k_nearest_labels).most_common(1)
+        return most_common[0][0]
+This code implements a basic k-nearest neighbors algorithm using Euclidean distance.
+
+18. Write Python code to perform hyperparameter tuning using grid search.
+Answer:
+
+python
+Copy code
+from sklearn.model_selection import GridSearchCV
+
+param_grid = {
+    'C': [0.1, 1, 10],
+    'gamma': [1, 0.1, 0.01],
+    'kernel': ['rbf', 'linear']
+}
+
+grid = GridSearchCV(SVC(), param_grid, refit=True, verbose=2)
+grid.fit(X_train, y_train)
+
+print("Best Parameters:", grid.best_params_)
+print("Best Estimator:", grid.best_estimator_)
+This code performs grid search to find the best hyperparameters for an SVM model.
+
+19. How would you use Python to calculate the feature importance in a random forest model?
+Answer:
+
+python
+Copy code
+from sklearn.ensemble import RandomForestClassifier
+
+model = RandomForestClassifier()
+model.fit(X_train, y_train)
+
+importances = model.feature_importances_
+for i, importance in enumerate(importances):
+    print(f"Feature {i}: {importance}")
+This code calculates and prints the importance of each feature in a random forest model.
+
+20. Write Python code to save and load a trained machine learning model.
+Answer:
+
+python
+Copy code
+import joblib
+
+# Saving the model
+joblib.dump(model, 'model.pkl')
+
+# Loading the model
+loaded_model = joblib.load('model.pkl')
