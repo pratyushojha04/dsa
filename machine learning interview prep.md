@@ -256,8 +256,8 @@ python
 Copy code
 import joblib
 
-# Saving the model
+##### Saving the model
 joblib.dump(model, 'model.pkl')
 
-# Loading the model
+##### Loading the model
 loaded_model = joblib.load('model.pkl')
