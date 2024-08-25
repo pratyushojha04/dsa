@@ -335,7 +335,8 @@ plt.plot(X, y_pred, color='red', label='Fitted line')
 plt.xlabel('X')
 plt.ylabel('y')
 plt.legend()
-plt.show()
+plt.show() ```
+
 ### 32. What is the Difference Between Simple Linear Regression and Multiple Linear Regression?
 
 **Details:**
